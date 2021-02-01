@@ -17,7 +17,7 @@
     Search : 
     <input type="search" v-model="search" />
   </label>
-  <TakeUser :usersFiltered="usersFiltered" />
+  <TakeUser :usersFiltered="usersFiltered" :sort="sort" />
 </template>
 
 <script>
@@ -33,23 +33,36 @@ export default {
     return{
       users: [],
       genderFilter: ['male', 'female'],
-      search: ''
+      search: '',
+      sortDirection : 'asc',
+      sortKey : 'dob.age'
     }
   },
   computed:{
     usersFiltered(){
       let filter = new RegExp(this.search, "i");
       return this.users
-                  .filter((user) => (this.genderFilter.includes(user.gender)))
-                  //.filter( user => user.name.last.match(filter))
+                  .filter( (user) => (this.genderFilter.includes(user.gender)) )
                   .filter( user => user.name.last.match(filter) || user.name.first.match(filter) )
-    }
-  },
+                  .sort( (u1,u2) => {
+                    let modifier = 1;
+                    if(this.sortDirection === 'desc') modifier = -1;
+                    if(u1.dob.age < u2.dob.age) return -1 * modifier;
+                    if(u1.dob.age > u2.dob.age) return 1 * modifier;
+                    return 0;
+                  })
+    } 
+  }, 
   methods:{
    async fetchUsers(){
       await axios
       .get("https://randomuser.me/api/?results=20")
       .then(response => this.users = this.users.concat(response.data.results))
+    },
+    sort(key){
+      if(this.sortKey === key) {
+          this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+      }
     }
   }
 }

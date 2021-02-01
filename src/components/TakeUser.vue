@@ -7,7 +7,10 @@
           <th>Nom</th>
           <th>Prénom</th>
           <th>Email</th>
-          <th>Age</th>
+          <th @click="sort('dob.age')" :class="[sortKey === 'dob.age' ? sortDirection : '']">Age
+            <img src="https://image.flaticon.com/icons/png/512/36/36687.png" width="15" v-if="sortDirection=='asc'" />
+            <img src="http://cdn.onlinewebfonts.com/svg/img_339653.png" width="15" v-else />
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -29,7 +32,13 @@ export default {
   props: {
     usersFiltered: Array,
     genderFilter : Array,
-    search : String
+    search : String,
+    sortDirection : String,
+    sortKey : String,
+    sort : Function
+  },
+  mounted(){
+    this.$parent.sort();
   }
 }
 </script>
