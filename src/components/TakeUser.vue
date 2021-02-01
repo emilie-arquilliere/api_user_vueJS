@@ -28,7 +28,8 @@ export default {
   name: 'TakeUser',
   props: {
     usersFiltered: Array,
-    genderFilter : Array
+    genderFilter : Array,
+    search : String
   }
 }
 </script>
