@@ -11,6 +11,7 @@
     <input type="checkbox" v-model="genderFilter" value="female" />
     Fetch female
   </label>
+  <br>
   <label>
     Search : 
     <input type="search" v-model="search" />
@@ -39,11 +40,11 @@ export default {
       return this.users
                 .filter(
                   (user) => {
-                    //let filter = new RegExp(this.search, "i");
+                    let filter = new RegExp(this.search, "i");
                     this.genderFilter.includes(user.gender);
-                    /*user.name.last.match(filter);
+                    user.name.last.match(filter);
                     user.name.first.match(filter);
-                    user.email.match(filter);*/
+                    user.email.match(filter);
                   }
                 )
     }
