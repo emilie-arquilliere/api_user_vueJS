@@ -11,7 +11,7 @@
     <input type="checkbox" v-model="genderFilter" value="female" />
     Fetch female
   </label>
-  <TakeUser :usersFiltered="usersFiltered" />
+  <TakeUser :usersFiltered="usersFiltered"/>
 </template>
 
 <script>
@@ -31,14 +31,14 @@ export default {
   },
   computed:{
     usersFiltered(){
-      return this.users.filter((user) => (this.genderFilter.includes(user.gender)))
-    }
+      return this.users.filter((user) => (this.genderFilter.includes(user.gender)))           
+    },
   },
   methods:{
    async fetchUsers(){
       await axios
       .get("https://randomuser.me/api/?results=20")
-      .then(response => this.users = response.data.results);
+      .then(response => this.users.concat(response.data.results));
     }
   }
 }

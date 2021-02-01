@@ -7,6 +7,7 @@
           <th>Nom</th>
           <th>Prénom</th>
           <th>Email</th>
+          <th>Age</th>
         </tr>
       </thead>
       <tbody>
@@ -15,6 +16,7 @@
           <td>{{user.name.last}}</td>
           <td>{{user.name.first}}</td>
           <td>{{user.email}}</td>
+          <td>{{user.dob.age}}</td>
         </tr>
       </tbody>
     </table>
