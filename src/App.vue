@@ -40,22 +40,19 @@ export default {
   },
   computed:{
     usersFiltered(){
-      let filter = new RegExp(this.search, "i");
+      const filter = new RegExp(this.search, "i");
       return this.users
                   .filter( (user) => (this.genderFilter.includes(user.gender)) )
                   .filter( user => user.name.last.match(filter) || user.name.first.match(filter) )
                   .sort( (u1,u2) => {
-                    let modifier = 1;
-                    if(this.sortDirection === 'desc') modifier = -1;
-                    if(u1.dob.age < u2.dob.age) return -1 * modifier;
-                    if(u1.dob.age > u2.dob.age) return 1 * modifier;
-                    return 0;
+                    const modifier = this.sortDirection === 'desc' ? -1 : 1;
+                    return (u1.dob.age - u2.dob.age) * modifier;
                   })
     } 
   }, 
   methods:{
-   async fetchUsers(){
-      await axios
+    fetchUsers(){
+       axios
       .get("https://randomuser.me/api/?results=20")
       .then(response => this.users = this.users.concat(response.data.results))
     },
@@ -64,6 +61,9 @@ export default {
           this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
       }
     }
+  },
+  beforeMount(){
+    this.fetchUsers();
   }
 }
 </script>
