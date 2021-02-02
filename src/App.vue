@@ -17,7 +17,7 @@
     Search : 
     <input type="search" v-model="search" />
   </label>
-  <TakeUser :usersFiltered="usersFiltered" :sort="sort" />
+  <TakeUser :usersFiltered="usersFiltered" :sortDirection="sortDirection" :sort="sort" />
 </template>
 
 <script>
