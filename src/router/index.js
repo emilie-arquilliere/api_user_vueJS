@@ -16,10 +16,20 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
-  {
+  /*{
     path: '/users',
     name: 'Users',
     component: Users
+  },*/
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users,
+    props: route => (
+              { query: route.query.search },
+              { query: route.query.sortAge },
+              { query: route.query.gender }
+            )
   }
 ]
 

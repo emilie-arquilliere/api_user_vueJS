@@ -1,22 +1,32 @@
 <template>
   <h1>Fetch Users with VueJS</h1>
   <br>
-  <button class="btn btn-primary" v-on:click="fetchUsers">FetchUsers</button>
-  <label> 
-    <input type="checkbox" v-model="genderFilter" value="male" />
-    Fetch male
-  </label>
-  <label>
-    <input type="checkbox" v-model="genderFilter" value="female" />
-    Fetch female
-  </label>
-  <span>Nombre d'utilisateur : {{usersFiltered.length}}</span>
-  <br>
-  <label>
-    Search : 
-    <input type="search" v-model="search" />
-  </label>
-  <TakeUser :usersFiltered="usersFiltered" :sortDirection="sortDirection" :sort="sort" />
+   <div class="headt">
+    <button class="btn btn-primary" v-on:click="fetchUsers">Récupérer des utilisateurs</button>
+    <label>
+      <input v-model="genderFilter" type="checkbox" value="male" :disabled="genderFilter.length<2 && genderFilter.includes('male')" />
+      Hommes
+    </label>
+    <label>
+      <input v-model="genderFilter" type="checkbox" value="female" :disabled="genderFilter.length<2 && genderFilter.includes('female')"/>
+      Femmes
+    </label>
+    <label>
+      Rechercher :
+      <input type="search" v-model="search" placeholder="Rechercher"/>
+    </label>  
+    <button class="btn btn-primary" @click="resetFilter">Reset</button>
+    <label>
+      Trier par âge :
+      <p v-if="sortDirection === ''">Par défaut</p>
+      <p v-if="sortDirection === 'asc'">Croissant</p>
+      <p v-if="sortDirection === 'desc'">Décroissant</p>
+    </label>
+  </div>
+  
+  <p v-if="usersFiltered.length">Il y a <strong>{{usersFiltered.length}}</strong> utilisateurs sur {{users.length}}</p>
+  <p v-else >Il n'y a <strong>0</strong> utilisateur sur {{users.length}}</p>
+  <TakeUser :usersFiltered="usersFiltered" :sortDirection="sortDirection" :changeSort="changeSort" />
 </template>
 
 <script>
@@ -30,10 +40,9 @@ export default {
   data(){
     return{
       users: [],
-      genderFilter: ['male', 'female'],
-      search: '',
-      sortDirection : 'asc',
-      sortKey : 'dob.age'
+      genderFilter: (this.$route.query.gender || 'male,female').split(","),
+      search: this.$route.query.search || '',
+      sortDirection : this.$route.query.sortAge || ''
     }
   },
   computed:{
@@ -43,7 +52,8 @@ export default {
                   .filter( (user) => (this.genderFilter.includes(user.gender)) )
                   .filter( user => user.name.last.match(filter) || user.name.first.match(filter) )
                   .sort( (u1,u2) => {
-                    const modifier = this.sortDirection === 'desc' ? -1 : 1;
+                    if (!this.sortDirection) return 0;
+                    const  modifier = this.sortDirection === 'desc' ? -1 : 1;
                     return (u1.dob.age - u2.dob.age) * modifier;
                   })
     } 
@@ -54,15 +64,46 @@ export default {
       .get("https://randomuser.me/api/?results=20")
       .then(response => this.users = this.users.concat(response.data.results))
     },
-    sort(key){
-      if(this.sortKey === key) {
-          this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    updateQuery(){
+      const query = {}
+      if(this.genderFilter.length < 2){
+        query.gender = this.genderFilter.join(',')
       }
+      if(this.search){
+        query.search = this.search
+      }
+      if(this.sortDirection){
+        query.sortAge = this.sortDirection
+      }
+      this.$router.push({ query })
+    },
+    changeSort(){
+      if(this.sortDirection === ''){
+        this.sortDirection = 'asc'
+      }else if(this.sortDirection ==='asc'){
+        this.sortDirection = 'desc'
+      }else if(this.sortDirection === 'desc'){
+        this.sortDirection = ''
+      }
+    },
+    resetFilter(){
+      this.genderFilter = ['male', 'female'];
+      this.search = '';
+      this.sortDirection = '';
     }
-  }/*,
-  beforeMount(){
-    this.fetchUsers();
-  }*/
+  },
+  watch:{
+    search(){
+      this.updateQuery();
+    },
+    sortDirection(){
+      this.updateQuery();
+    },
+    genderFilter(){
+      this.updateQuery();
+    }    
+  },
+  created(){this.fetchUsers()},
 }
 </script>
 
@@ -74,5 +115,16 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.headt{
+  display: flex;
+  justify-content: space-around;
+}
+.btn-primary{
+  background-color: #41B883!important;
+  border-color: #41B883!important;
+}
+.btn-primary:hover{
+  background-color: #35495E!important;
 }
 </style>

@@ -1,15 +1,15 @@
 <template>
   <div class="hello">
-    <table id="tbl-users" class="table table-hover">
+    <table id="tbl-users" class="table table-hover" v-if="usersFiltered.length">
       <thead>
         <tr>
           <th></th>
           <th>Nom</th>
           <th>Prénom</th>
           <th>Email</th>
-          <th @click="sort('dob.age')" :class="[sortKey === 'dob.age' ? sortDirection : '']">Age
-            <img src="https://image.flaticon.com/icons/png/512/36/36687.png" width="15" v-if="sortDirection=='asc'" />
-            <img src="http://cdn.onlinewebfonts.com/svg/img_339653.png" width="15" v-else />
+          <th @click="changeSort">
+            Age
+            <i v-if="sortDirection" class="fa" v-bind:class="[ sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down' ]"></i>
           </th>
         </tr>
       </thead>
@@ -34,11 +34,12 @@ export default {
     genderFilter : Array,
     search : String,
     sortDirection : String,
-    sortKey : String,
-    sort : Function
+    changeSort : Function
   },
-  mounted(){
-    this.$parent.sort();
+  watch:{
+    changeSort(){
+      this.$parent.changeSort()
+    }
   }
 }
 </script>
