@@ -25,7 +25,7 @@
   </div>
   
   <p v-if="usersFiltered.length">Il y a <strong>{{usersFiltered.length}}</strong> utilisateurs sur {{users.length}}</p>
-  <p v-else >Il n'y a <strong>0</strong> utilisateur sur {{users.length}}</p>
+  <p v-else >Il y a <strong>0</strong> utilisateur sur {{users.length}}</p>
   <TakeUser :usersFiltered="usersFiltered" :sortDirection="sortDirection" :changeSort="changeSort" />
 </template>
 
@@ -49,20 +49,20 @@ export default {
     usersFiltered(){
       const filter = new RegExp(this.search, "i");
       return this.users
-                  .filter( (user) => (this.genderFilter.includes(user.gender)) )
-                  .filter( user => user.name.last.match(filter) || user.name.first.match(filter) )
+                  .filter( user => this.genderFilter.includes(user.gender) )
+                  .filter( user => user.lastName.match(filter) || user.firstName.match(filter) )
                   .sort( (u1,u2) => {
                     if (!this.sortDirection) return 0;
                     const  modifier = this.sortDirection === 'desc' ? -1 : 1;
-                    return (u1.dob.age - u2.dob.age) * modifier;
+                    return (u1.age - u2.age) * modifier;
                   })
     } 
   }, 
   methods:{
     fetchUsers(){
        axios
-      .get("https://randomuser.me/api/?results=20")
-      .then(response => this.users = this.users.concat(response.data.results))
+      .get("http://localhost:6929/users")
+      .then(response => this.users = this.users.concat(response.data))
     },
     updateQuery(){
       const query = {}
@@ -103,7 +103,7 @@ export default {
       this.updateQuery();
     }    
   },
-  created(){this.fetchUsers()},
+  created(){this.fetchUsers();}
 }
 </script>
 

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Users from '../views/Users.vue'
+import EditUser from '../views/EditUser.vue'
 
 const routes = [
   {
@@ -16,11 +17,6 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
-  /*{
-    path: '/users',
-    name: 'Users',
-    component: Users
-  },*/
   {
     path: '/users',
     name: 'Users',
@@ -30,6 +26,11 @@ const routes = [
               { query: route.query.sortAge },
               { query: route.query.gender }
             )
+  },
+  {
+    path: '/users/:id',
+    name: 'EditUser',
+    component: EditUser
   }
 ]
 

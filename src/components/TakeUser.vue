@@ -15,11 +15,18 @@
       </thead>
       <tbody>
         <tr v-for="user in usersFiltered" :key="user">
-          <td><img :src="user.picture.thumbnail"/></td>
-          <td>{{user.name.last}}</td>
-          <td>{{user.name.first}}</td>
+          <td>
+            <router-link :to="{name : 'EditUser', params: {id: user.id} }">
+              <img :src="user.avatarUrl"/>
+            </router-link>
+          </td>
+          <td>
+            <router-link :to="{name : 'EditUser', params: {id: user.id} }">
+              {{user.lastName}}
+            </router-link></td>
+          <td>{{user.firstName}}</td>
           <td>{{user.email}}</td>
-          <td>{{user.dob.age}}</td>
+          <td>{{user.age}}</td>
         </tr>
       </tbody>
     </table>
