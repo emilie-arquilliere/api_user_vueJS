@@ -1,9 +1,12 @@
 <template>
   <h1>Edit User n° {{`${this.$route.params.id}`}}</h1>
-  <br>
+  <br><br>
   <div>
     <button class="btn btn-primary" @click="back">Retour</button>
   </div>
+  <br>
+  <img :src="user.avatarUrl" class="img" />
+  <br>
   <InputText label="Nom" :value="user.lastName" ref="lastName" :changeInput="changeInput" />
   <br>
   <InputText label="Prénom" :value="user.firstName" ref="firstName" :changeInput="changeInput" />
@@ -12,7 +15,7 @@
   <br>
   <InputText label="Anniversaire" :value="user.birthDate" ref="birthDate" :changeInput="changeInput" />
   <br>
-  <!--<RadioButton :id="user.id" :user="user"/>-->
+  <GenderRadio :value="user.gender" ref="gender" :changeInput="changeInput" />
   <br>
   <SaveButton :id="user.id" :user="user" />
 
@@ -21,7 +24,7 @@
 <script>
 import InputText from "../components/formulaire/InputText.vue"
 import SaveButton from "../components/formulaire/SaveButton.vue"
-//import RadioButton from "../components/formulaire/RadioButton.vue"
+import GenderRadio from "../components/formulaire/GenderRadio.vue"
 import axios from "axios"
 
 export default {
@@ -29,7 +32,7 @@ export default {
   components: {
     InputText,
     SaveButton,
-   // RadioButton
+    GenderRadio
   },
   data(){
     return{
@@ -50,6 +53,7 @@ export default {
       this.user.firstName = this.$refs.firstName.val
       this.user.email = this.$refs.email.val
       this.user.birthDate = this.$refs.birthDate.val
+      this.user.gender = this.$refs.gender.radioValue
     }
   },
   created(){this.fetchUser();}

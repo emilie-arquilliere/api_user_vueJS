@@ -17,7 +17,7 @@
         <tr v-for="user in usersFiltered" :key="user">
           <td>
             <router-link :to="{name : 'EditUser', params: {id: user.id} }">
-              <img :src="user.avatarUrl"/>
+              <img :src="user.avatarUrl" class="img" />
             </router-link>
           </td>
           <td>
@@ -68,4 +68,5 @@ li {
 a {
   color: #42b983;
 }
+
 </style>
