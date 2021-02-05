@@ -23,7 +23,8 @@
           <td>
             <router-link :to="{name : 'EditUser', params: {id: user.id} }">
               {{user.lastName}}
-            </router-link></td>
+            </router-link>
+          </td>
           <td>{{user.firstName}}</td>
           <td>{{user.email}}</td>
           <td>{{user.age}}</td>

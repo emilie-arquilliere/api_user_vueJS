@@ -8,13 +8,13 @@
   <br>
   <InputText label="Prénom" :value="user.firstName" ref="firstName" :changeInput="changeInput" />
   <br>
-  <!--<InputText label="Email" :value="user.email" />
+  <InputText label="Email" :value="user.email" ref="email" :changeInput="changeInput" />
   <br>
-  <InputText label="Anniversaire" :value="user.birthDate" />
+  <!--<InputText label="Anniversaire" :value="user.birthDate" />
   <br>
   <RadioButton :id="user.id" :user="user"/>-->
   <br>
-  <SaveButton :id="user.id" :user="user"/>
+  <SaveButton :id="user.id" :user="user" />
 
 </template>
 
@@ -48,6 +48,7 @@ export default {
     changeInput(){
       this.user.lastName = this.$refs.lastName.val
       this.user.firstName = this.$refs.firstName.val
+      this.user.email = this.$refs.email.val
     }
   },
   created(){this.fetchUser();}
