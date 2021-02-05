@@ -22,14 +22,19 @@ export default{
             });
         },
         testData(url){
-            const reg = new RegExp(/([a-zA-Z0-9_.]+@[a-zA-Z_\-.]+\.[a-zA-Z]{2,})/i)
+            const regEmail = new RegExp(/([a-zA-Z0-9_.]+@[a-zA-Z_\-.]+\.[a-zA-Z]{2,})/i)
+            const regDate = new RegExp(/([0-9]{4}-[0-9]{2}-[0-9]{2})/i)
             let msg = ''
             let ok = 1
-            if(!reg.test(this.user.email)){
-                msg += "L'adresse email n'est pas valide"
+            if(!regEmail.test(this.user.email)){
+                msg += "L'adresse email n'est pas valide\n"
                 ok = 0
             }
-            
+            if(!regDate.test(this.user.birthDate)){
+                msg += "La date d'anniversaire doit être au format AAAA-MM-JJ\n"
+                ok = 0
+            }
+
             if(ok === 0) alert(msg)
             else this.editUser(url)
         }

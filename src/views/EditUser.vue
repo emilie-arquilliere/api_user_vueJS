@@ -10,9 +10,9 @@
   <br>
   <InputText label="Email" :value="user.email" ref="email" :changeInput="changeInput" />
   <br>
-  <!--<InputText label="Anniversaire" :value="user.birthDate" />
+  <InputText label="Anniversaire" :value="user.birthDate" ref="birthDate" :changeInput="changeInput" />
   <br>
-  <RadioButton :id="user.id" :user="user"/>-->
+  <!--<RadioButton :id="user.id" :user="user"/>-->
   <br>
   <SaveButton :id="user.id" :user="user" />
 
@@ -49,6 +49,7 @@ export default {
       this.user.lastName = this.$refs.lastName.val
       this.user.firstName = this.$refs.firstName.val
       this.user.email = this.$refs.email.val
+      this.user.birthDate = this.$refs.birthDate.val
     }
   },
   created(){this.fetchUser();}
