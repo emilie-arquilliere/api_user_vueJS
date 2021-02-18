@@ -22,6 +22,8 @@
       <p v-if="sortDirection === 'asc'">Croissant</p>
       <p v-if="sortDirection === 'desc'">Décroissant</p>
     </label>
+    <button class="btn btn-primary" v-on:click="openModal">Créer un utilisateur</button>
+    <Modal v-show="isModalVisible" @close="closeModal"/>
   </div>
   
   <p v-if="usersFiltered.length">Il y a <strong>{{usersFiltered.length}}</strong> utilisateurs sur {{users.length}}</p>
@@ -31,18 +33,22 @@
 
 <script>
 import TakeUser from '../components/TakeUser.vue'
+import Modal from '../components/Modal.vue'
 import axios from "axios"
+
 export default {
   name: 'App',
   components: {
-    TakeUser
+    TakeUser,
+    Modal
   },
   data(){
     return{
       users: [],
       genderFilter: (this.$route.query.gender || 'male,female').split(","),
       search: this.$route.query.search || '',
-      sortDirection : this.$route.query.sortAge || ''
+      sortDirection : this.$route.query.sortAge || '',
+      isModalVisible: false
     }
   },
   computed:{
@@ -90,6 +96,12 @@ export default {
       this.genderFilter = ['male', 'female'];
       this.search = '';
       this.sortDirection = '';
+    },
+    openModal(){
+      this.isModalVisible = true
+    },
+    closeModal(){
+      this.isModalVisible = false
     }
   },
   watch:{
@@ -127,4 +139,6 @@ export default {
 .btn-primary:hover{
   background-color: #35495E!important;
 }
+
+
 </style>

@@ -5,6 +5,8 @@
     <button class="btn btn-primary" @click="back">Retour</button>
   </div>
   <br>
+  <ResetButton :id="user.id" :user="user" :resetForm="resetForm" />
+  <br>
   <img :src="user.avatarUrl" class="img" />
   <br>
   <InputText label="Nom" :value="user.lastName" ref="lastName" :changeInput="changeInput" />
@@ -13,7 +15,7 @@
   <br>
   <InputText label="Email" :value="user.email" ref="email" :changeInput="changeInput" />
   <br>
-  <InputText label="Anniversaire" :value="user.birthDate" ref="birthDate" :changeInput="changeInput" />
+  <InputDate label="Anniversaire" :value="user.birthDate" ref="birthDate" :changeInput="changeInput" />
   <br>
   <GenderRadio :value="user.gender" ref="gender" :changeInput="changeInput" />
   <br>
@@ -23,16 +25,20 @@
 
 <script>
 import InputText from "../components/formulaire/InputText.vue"
+import InputDate from "../components/formulaire/InputDate.vue"
 import SaveButton from "../components/formulaire/SaveButton.vue"
 import GenderRadio from "../components/formulaire/GenderRadio.vue"
+import ResetButton from "../components/formulaire/ResetButton.vue"
 import axios from "axios"
 
 export default {
   name: 'EditUser',
   components: {
     InputText,
+    InputDate,
     SaveButton,
-    GenderRadio
+    GenderRadio,
+    ResetButton
   },
   data(){
     return{
@@ -46,7 +52,7 @@ export default {
     fetchUser(){
       axios
       .get(`http://localhost:6929/users/${this.$route.params.id}`)
-      .then(response => this.user = response.data)
+      .then(response => this.user = response.data )
     },
     changeInput(){
       this.user.lastName = this.$refs.lastName.val
@@ -54,6 +60,9 @@ export default {
       this.user.email = this.$refs.email.val
       this.user.birthDate = this.$refs.birthDate.val
       this.user.gender = this.$refs.gender.radioValue
+    },
+    resetForm(){
+      this.user = {}
     }
   },
   created(){this.fetchUser();}

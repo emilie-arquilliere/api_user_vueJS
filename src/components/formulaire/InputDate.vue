@@ -1,14 +1,14 @@
 <template>
     <label>
         {{label}}
-        <input type="text" v-model="val">
+        <input type="date" v-model="val">
     </label>
     
 </template>
 
 <script>
 export default{
-    name: 'InputText',
+    name: 'InputDate',
     props:{
         label: String,
         value: String,
@@ -22,6 +22,7 @@ export default{
     watch:{
         value(){
             this.val = this.value
+            
         },
         val(){
             this.$parent.changeInput();
