@@ -1,16 +1,14 @@
 <template>
     <label>
-        {{label}}
-        <input type="date" v-model="val" class="form-control">
+        URL photo
+        <input type="text" v-model="val" class="form-control">
     </label>
-    
 </template>
 
 <script>
 export default{
-    name: 'InputDate',
+    name: 'InputFile',
     props:{
-        label: String,
         value: String,
         changeInput: Function
     },
@@ -22,7 +20,6 @@ export default{
     watch:{
         value(){
             this.val = this.value
-            
         },
         val(){
             this.$parent.changeInput();

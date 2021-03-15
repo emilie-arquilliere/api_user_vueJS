@@ -1,7 +1,7 @@
 <template>
     <label>
         {{label}}
-        <input type="text" v-model="val">
+        <input type="text" v-model="val" class="form-control">
     </label>
     
 </template>
