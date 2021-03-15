@@ -12,7 +12,7 @@
         <br>
         <img :src="user.avatarUrl" class="img" />
         <br>
-        <InputFile :value="user.avatarUrl" ref="avatarUrl" :changeInput="changeInput" />
+        <InputText label="Url photo" :value="user.avatarUrl" ref="avatarUrl" :changeInput="changeInput" />
         <br>
         <InputText label="Nom" :value="user.lastName" ref="lastName" :changeInput="changeInput" />
         <br>
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import InputFile from "../components/formulaire/InputFile.vue"
 import InputText from "../components/formulaire/InputText.vue"
 import InputDate from "../components/formulaire/InputDate.vue"
 import SaveButton from "../components/formulaire/SaveButton.vue"
@@ -42,7 +41,6 @@ import ResetButton from "../components/formulaire/ResetButton.vue"
 export default{
     name: 'Modal',
     components: {
-        InputFile,
         InputText,
         InputDate,
         SaveButton,

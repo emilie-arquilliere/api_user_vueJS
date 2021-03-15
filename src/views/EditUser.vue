@@ -3,17 +3,18 @@
   <br><br>
   <div>
     <button class="btn btn-primary" @click="back">Retour</button>
+     <ResetButton :id="user.id" :user="user" :resetForm="resetForm" />
   </div>
   <br>
-  <ResetButton :id="user.id" :user="user" :resetForm="resetForm" />
-  <br>
-  <img :src="user.avatarUrl" class="img" />
-  <br>
-  <InputFile :value="user.avatarUrl" ref="avatarUrl" :changeInput="changeInput" />
-  <br>
-  <InputText label="Nom" :value="user.lastName" ref="lastName" :changeInput="changeInput" />
-  <br>
-  <InputText label="Prénom" :value="user.firstName" ref="firstName" :changeInput="changeInput" />
+  <div>
+    <img :src="user.avatarUrl" class="img" />
+    <InputText label="Url photo" :value="user.avatarUrl" ref="avatarUrl" :changeInput="changeInput" />
+  </div> 
+  <div>
+    <InputText label="Nom" :value="user.lastName" ref="lastName" :changeInput="changeInput" />
+    <InputText label="Prénom" :value="user.firstName" ref="firstName" :changeInput="changeInput" />
+  </div>
+
   <br>
   <InputText label="Email" :value="user.email" ref="email" :changeInput="changeInput" />
   <br>
@@ -26,7 +27,6 @@
 </template>
 
 <script>
-import InputFile from "../components/formulaire/InputFile.vue"
 import InputText from "../components/formulaire/InputText.vue"
 import InputDate from "../components/formulaire/InputDate.vue"
 import SaveButton from "../components/formulaire/SaveButton.vue"
@@ -37,7 +37,6 @@ import axios from "axios"
 export default {
   name: 'EditUser',
   components: {
-    InputFile,
     InputText,
     InputDate,
     SaveButton,
@@ -94,4 +93,5 @@ export default {
 .btn-primary:hover{
   background-color: #35495E!important;
 }
+
 </style>
