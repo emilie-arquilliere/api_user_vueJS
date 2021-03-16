@@ -10,14 +10,14 @@
       <section class="modal-body">
         <ResetButton :id="user.id" :user="user" :resetForm="resetForm" />
         <br>
-        <img :src="user.avatarUrl" class="img" />
-        <br>
-        <InputText label="Url photo" :value="user.avatarUrl" ref="avatarUrl" :changeInput="changeInput" />
-        <br>
-        <InputText label="Nom" :value="user.lastName" ref="lastName" :changeInput="changeInput" />
-        <br>
-        <InputText label="Prénom" :value="user.firstName" ref="firstName" :changeInput="changeInput" />
-        <br>
+        <div>
+          <img :src="user.avatarUrl" class="img" />
+          <InputText label="Url photo" :value="user.avatarUrl" ref="avatarUrl" :changeInput="changeInput" />
+        </div>
+        <div>
+          <InputText label="Nom" :value="user.lastName" ref="lastName" :changeInput="changeInput" />
+          <InputText label="Prénom" :value="user.firstName" ref="firstName" :changeInput="changeInput" />
+        </div>
         <InputText label="Email" :value="user.email" ref="email" :changeInput="changeInput" />
         <br>
         <InputDate label="Anniversaire" :value="user.birthDate" ref="birthDate" :changeInput="changeInput" />
