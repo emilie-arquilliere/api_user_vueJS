@@ -8,7 +8,7 @@
   <br>
   <div>
     <img :src="user.avatarUrl" class="img" />
-    <InputText label="Url photo" :value="user.avatarUrl" ref="avatarUrl" :changeInput="changeInput" />
+    <InputFile label="Choisir une photo" :id="user.id" ref="avatarUrl" :changeInput="changeInput" />
   </div> 
   <div>
     <InputText label="Nom" :value="user.lastName" ref="lastName" :changeInput="changeInput" />
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import InputFile from "../components/formulaire/InputFile.vue"
 import InputText from "../components/formulaire/InputText.vue"
 import InputDate from "../components/formulaire/InputDate.vue"
 import SaveButton from "../components/formulaire/SaveButton.vue"
@@ -37,6 +38,7 @@ import axios from "axios"
 export default {
   name: 'EditUser',
   components: {
+    InputFile,
     InputText,
     InputDate,
     SaveButton,
@@ -58,7 +60,7 @@ export default {
       .then(response => this.user = response.data )
     },
     changeInput(){
-      this.user.avatarUrl = this.$refs.avatarUrl.val
+      this.user.avatarUrl = this.$refs.avatarUrl.file
       this.user.lastName = this.$refs.lastName.val
       this.user.firstName = this.$refs.firstName.val
       this.user.email = this.$refs.email.val

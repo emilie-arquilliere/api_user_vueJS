@@ -14,19 +14,34 @@ export default{
     },
     methods:{
         editUser(rqt){
+            const formData = new FormData();
+            formData.append('avatarUrl', this.user.avatarUrl);
+            formData.append('firstName', this.user.firstName);
+            formData.append('lastName', this.user.lastName);
+            formData.append('email', this.user.email);
+            formData.append('birthDate', this.user.birthDate);
+            formData.append('gender', this.user.gender);
             if(rqt===1){
                 axios
-                .put(`http://localhost:6929/users/${this.id}`, this.user)
-                .then(()=>{
-                    alert('Utilisateur enregistré');
-                    this.$router.go(-1);
+                .put(`http://localhost:6929/users/${this.id}`, formData)
+                .then(response=>{
+                    if(response.data.errorMail){
+                        alert("Cet email est déjà utilisé.")
+                    }else{
+                       alert('Utilisateur enregistré');
+                        this.$router.go(-1); 
+                    }
                 });
             }else{
                 axios
-                .post(`http://localhost:6929/users`, this.user)
-                .then(()=>{
-                    alert('Utilisateur enregistré');
-                    this.$router.go(-1);
+                .post(`http://localhost:6929/users`, formData)
+                .then(response=>{
+                    if(response.data.errorMail){
+                        alert("Cet email est déjà utilisé.")
+                    }else{
+                       alert('Utilisateur enregistré');
+                        this.$router.go(-1); 
+                    }
                 });
             }
         },

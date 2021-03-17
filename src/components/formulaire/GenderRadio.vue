@@ -1,14 +1,13 @@
 <template>
     <label for="female">
-        <input type="radio" value="female" v-model="radioValue" name="gender" id="female" :checked="radioValue === 'female' ? 'checked' : ''" />
+        <input type="radio" value="female" v-model="radioValue" name="gender" id="female" />
         Femme
     </label>
     <br>
     <label for="male">
-        <input type="radio" value="male" v-model="radioValue" name="gender" id="male" :checked="radioValue === 'male' ? 'checked' : ''" />
+        <input type="radio" value="male" v-model="radioValue" name="gender" id="male" />
         Homme
     </label>
-    
 </template>
 
 <script>
